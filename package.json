@@ -1,0 +1,29 @@
+{
+  "name": "cypress-test",
+  "version": "0.0.0",
+  "description": "Cypress Component test app",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress open --component",
+    "test:all": "cypress run --component",
+    "test:pipeline": "cypress run --component --record"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@clayui/button": "^3.92.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@applitools/eyes-cypress": "^3.32.2",
+    "@babel/core": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
+    "@babel/preset-react": "^7.18.6",
+    "@testing-library/cypress": "^9.0.0",
+    "babel-loader": "^9.1.2",
+    "cross-env": "^7.0.3",
+    "cypress": "^12.11.0",
+    "webpack": "^5.81.0"
+  }
+}

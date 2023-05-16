@@ -1,0 +1,35 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+  - main
+
+pool: alm-windows-x64
+
+variables:
+  - name: commitSha
+    # Use Build.SourceVersion if we aren't in a PR
+    ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+      value: $(Build.SourceVersion)
+    # Use System.PullRequest.SourceCommitId if we are in PR
+    ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+      value: $(System.PullRequest.SourceCommitId)
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "18.x"
+    displayName: "Install Node.js"
+
+  - script: npm ci
+    displayName: "Install dependencies"
+
+  - powershell: |
+      npm run test:pipeline
+    displayName: "Run Cypress tests"
+    env:
+      APPLITOOLS_API_KEY: $(APPLITOOLS_API_KEY)
+      APPLITOOLS_BATCH_ID: $(commitSha)
+      CYPRESS_RECORD_KEY: $(CYPRESS_RECORD_KEY)
